@@ -83,6 +83,8 @@ const inlineTags = {
   strike: 'STRIKETHROUGH',
   strong: 'BOLD',
   u: 'UNDERLINE',
+  sub: 'SUBSCRIPT',
+  sup: 'SUPERSCRIPT',
 };
 
 const knownListItemDepthClasses = {
