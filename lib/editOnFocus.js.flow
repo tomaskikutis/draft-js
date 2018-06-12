@@ -28,6 +28,10 @@ function editOnFocus(editor: DraftEditor, e: SyntheticFocusEvent<>): void {
   var selection = currentSelection.set('hasFocus', true);
   editor.props.onFocus && editor.props.onFocus(e);
 
+  // When focusing draft-js backed contenteditable element using `HTMLElement.focus()`
+  // cursor is moved to the beginning of the editor unless selection is forced
+  const dontWantToLoseSelectionWhenFocusingProgrammatically = true;
+
   // When the tab containing this text editor is hidden and the user does a
   // find-in-page in a _different_ tab, Chrome on Mac likes to forget what the
   // selection was right after sending this focus event and (if you let it)
@@ -38,7 +42,9 @@ function editOnFocus(editor: DraftEditor, e: SyntheticFocusEvent<>): void {
   // Other browsers also don't have this bug, so we prefer to acceptSelection
   // when possible, to ensure that unfocusing and refocusing a Draft editor
   // doesn't preserve the selection, matching how textareas work.
-  if (UserAgent.isBrowser('Chrome < 60.0.3081.0')) {
+  const multiTabCursorJumpBugPresent = UserAgent.isBrowser('Chrome < 60.0.3081.0');
+
+  if (dontWantToLoseSelectionWhenFocusingProgrammatically || multiTabCursorJumpBugPresent) {
     editor.update(EditorState.forceSelection(editorState, selection));
   } else {
     editor.update(EditorState.acceptSelection(editorState, selection));
