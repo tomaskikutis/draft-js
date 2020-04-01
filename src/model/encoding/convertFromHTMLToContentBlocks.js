@@ -459,7 +459,7 @@ class ContentBlocksBuilder {
           Array.from(node.childNodes),
           style,
         );
-        this._trimCurrentText();
+        // this._trimCurrentText(); // editor3 won't trim spaces from pasted text
         blockConfigs.push(
           this._makeBlockConfig({
             key,
