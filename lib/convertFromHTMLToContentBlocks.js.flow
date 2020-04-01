@@ -443,9 +443,8 @@ class ContentBlocksBuilder {
 
         const key = generateRandomKey();
 
-        const childConfigs = this._toBlockConfigs(Array.from(node.childNodes), style);
+        const childConfigs = this._toBlockConfigs(Array.from(node.childNodes), style); // this._trimCurrentText(); // editor3 won't trim spaces from pasted text
 
-        this._trimCurrentText();
 
         blockConfigs.push(this._makeBlockConfig({
           key,
